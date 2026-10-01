@@ -12,15 +12,20 @@
 
 <div class="upload-section">
   <div>
-    <h3>Airbnb iCal URL</h3>
-    <input type="text" id="airbnbURL" placeholder="Paste Airbnb iCal link here">
+    <h3>Airbnb iCal File</h3>
+    <input type="file" id="airbnbFile" accept=".ics">
   </div>
 
   <div>
-    <h3>Vrbo iCal URL</h3>
-    <input type="text" id="vrboURL" placeholder="Paste Vrbo iCal link here">
+    <h3>Vrbo iCal File</h3>
+    <input type="file" id="vrboFile" accept=".ics">
   </div>
 </div>
+
+<button id="compareBtn">Compare Calendars</button>
+
+<div id="results"></div>
+
 
 <button id="compareBtn">Compare Calendars</button>
 
