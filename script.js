@@ -2,7 +2,7 @@
 function isFuture(dateString) {
   const year = dateString.slice(0, 4);
   const month = dateString.slice(4, 6);
-  const day = dateString.slice(0, 8).slice(6, 8);
+  const day = dateString.slice(6, 8);
 
   const eventDate = new Date(`${year}-${month}-${day}`);
   const today = new Date();
@@ -53,6 +53,22 @@ document.getElementById("compareBtn").addEventListener("click", async () => {
 
   const mismatches = [];
   const risks = [];
+  const matches = [];
+
+  // Identify matched bookings
+  airbnbEvents.forEach(a => {
+    const aStart = a.start.slice(0, 8);
+    const aEnd = a.end.slice(0, 8);
+
+    const match = vrboEvents.find(v =>
+      v.start.slice(0, 8) === aStart &&
+      v.end.slice(0, 8) === aEnd
+    );
+
+    if (match) {
+      matches.push(`✔ ${formatDate(aStart)} → ${formatDate(aEnd)}`);
+    }
+  });
 
   // Airbnb → Vrbo mismatches
   airbnbEvents.forEach(a => {
@@ -105,59 +121,31 @@ document.getElementById("compareBtn").addEventListener("click", async () => {
   // Build output
   resultsDiv.innerHTML = "<h2>Results (Future Bookings Only)</h2>";
 
-// Identify matched bookings
-const matches = [];
-
-airbnbEvents.forEach(a => {
-  const aStart = a.start.slice(0, 8);
-  const aEnd = a.end.slice(0, 8);
-
-  const match = vrboEvents.find(v =>
-    v.start.slice(0, 8) === aStart &&
-    v.end.slice(0, 8) === aEnd
-  );
-
-  if (match) {
-    matches.push(`✔ ${formatDate(aStart)} → ${formatDate(aEnd)}`);
+  // Matched bookings
+  if (matches.length > 0) {
+    resultsDiv.innerHTML += "<h3>Matched Bookings</h3><ul>" +
+      matches.map(m => `<li>${m}</li>`).join("") +
+      "</ul>";
+  } else {
+    resultsDiv.innerHTML += "<p>No matched bookings found.</p>";
   }
-});
 
-// Build output
-resultsDiv.innerHTML = "<h2>Results (Future Bookings Only)</h2>";
-
-if (matches.length > 0) {
-  resultsDiv.innerHTML += "<h3>Matched Bookings</h3><ul>" +
-    matches.map(m => `<li>${m}</li>`).join("") +
-    "</ul>";
-}
-
-if (mismatches.length > 0) {
-  resultsDiv.innerHTML += "<h3>Mismatches</h3><ul>" +
-    mismatches.map(m => `<li>${m}</li>`).join("") +
-    "</ul>";
-}
-
-if (risks.length > 0) {
-  resultsDiv.innerHTML += "<h3>Double‑Booking Risks</h3><ul>" +
-    risks.map(r => `<li>${r}</li>`).join("") +
-    "</ul>";
-}
-
-// If everything matches
-if (matches.length > 0 && mismatches.length === 0 && risks.length === 0) {
-  resultsDiv.innerHTML += "<p>✔ Calendars match perfectly for all future bookings.</p>";
-}
-
-
+  // Mismatches
   if (mismatches.length > 0) {
     resultsDiv.innerHTML += "<h3>Mismatches</h3><ul>" +
       mismatches.map(m => `<li>${m}</li>`).join("") +
       "</ul>";
   }
 
+  // Risks
   if (risks.length > 0) {
     resultsDiv.innerHTML += "<h3>Double‑Booking Risks</h3><ul>" +
       risks.map(r => `<li>${r}</li>`).join("") +
       "</ul>";
+  }
+
+  // Final summary
+  if (matches.length > 0 && mismatches.length === 0 && risks.length === 0) {
+    resultsDiv.innerHTML += "<p>✔ Calendars match perfectly for all future bookings.</p>";
   }
 });
