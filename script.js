@@ -5,6 +5,17 @@ function isFuture(dateString) {
 
   const eventDate = new Date(`${year}-${month}-${day}`);
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return eventDate >= today;
+}
+function isFuture(dateString) {
+  const year = dateString.slice(0, 4);
+  const month = dateString.slice(4, 6);
+  const day = dateString.slice(6, 8);
+
+  const eventDate = new Date(`${year}-${month}-${day}`);
+  const today = new Date();
 
   // Remove time portion for accurate comparison
   today.setHours(0, 0, 0, 0);
