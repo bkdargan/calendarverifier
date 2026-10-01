@@ -1,8 +1,8 @@
-// Helper: is this date today or in the future?
+// Helper: check if date is today or in the future
 function isFuture(dateString) {
   const year = dateString.slice(0, 4);
   const month = dateString.slice(4, 6);
-  const day = dateString.slice(6, 8);
+  const day = dateString.slice(0, 8).slice(6, 8);
 
   const eventDate = new Date(`${year}-${month}-${day}`);
   const today = new Date();
@@ -13,10 +13,7 @@ function isFuture(dateString) {
 
 // Helper: format YYYYMMDD → YYYY-MM-DD
 function formatDate(dateString) {
-  const year = dateString.slice(0, 4);
-  const month = dateString.slice(4, 6);
-  const day = dateString.slice(6, 8);
-  return `${year}-${month}-${day}`;
+  return `${dateString.slice(0, 4)}-${dateString.slice(4, 6)}-${dateString.slice(6, 8)}`;
 }
 
 document.getElementById("compareBtn").addEventListener("click", async () => {
