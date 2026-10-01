@@ -15,6 +15,9 @@ function parseICal(text) {
     if (line.startsWith("DTEND")) {
       current.end = line.split(":")[1];
     }
+    if (line.startsWith("SUMMARY")) {
+  current.summary = line.split(":")[1];
+}
     if (line.startsWith("END:VEVENT")) {
       events.push(current);
     }
