@@ -23,8 +23,14 @@ document.getElementById("compareBtn").addEventListener("click", async () => {
   const airbnbText = await airbnbFile.text();
   const vrboText = await vrboFile.text();
 
-  const airbnbEvents = parseICal(airbnbText);
-  const vrboEvents = parseICal(vrboText);
+const airbnbEvents = parseICal(airbnbText)
+  .filter(e => e.summary && e.summary.toLowerCase().includes("reservation"))
+  .filter(e => isFuture(e.start.slice(0, 8)));
+
+const vrboEvents = parseICal(vrboText)
+  .filter(e => e.summary && e.summary.toLowerCase().includes("reservation"))
+  .filter(e => isFuture(e.start.slice(0, 8)));
+
 
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "<h2>Results</h2>";
