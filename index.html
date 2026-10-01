@@ -10,21 +10,21 @@
   <h1>Airbnb + Vrbo Calendar Sync Checker</h1>
   <p>Upload your Airbnb and Vrbo iCal files to detect mismatches and double‑booking risks.</p>
 
-  <div class="upload-section">
-    <div>
-      <h3>Airbnb iCal</h3>
-      <input type="file" id="airbnbFile" accept=".ics">
-    </div>
-
-    <div>
-      <h3>Vrbo iCal</h3>
-      <input type="file" id="vrboFile" accept=".ics">
-    </div>
+<div class="upload-section">
+  <div>
+    <h3>Airbnb iCal URL</h3>
+    <input type="text" id="airbnbURL" placeholder="Paste Airbnb iCal link here">
   </div>
 
-  <button id="compareBtn">Compare Calendars</button>
+  <div>
+    <h3>Vrbo iCal URL</h3>
+    <input type="text" id="vrboURL" placeholder="Paste Vrbo iCal link here">
+  </div>
+</div>
 
-  <div id="results"></div>
+<button id="compareBtn">Compare Calendars</button>
+
+<div id="results"></div>
 
   <script src="ical.js"></script>
   <script src="script.js"></script>
