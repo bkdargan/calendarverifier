@@ -105,10 +105,49 @@ document.getElementById("compareBtn").addEventListener("click", async () => {
   // Build output
   resultsDiv.innerHTML = "<h2>Results (Future Bookings Only)</h2>";
 
-  if (mismatches.length === 0 && risks.length === 0) {
-    resultsDiv.innerHTML += "<p>✔ Calendars match for all future bookings.</p>";
-    return;
+// Identify matched bookings
+const matches = [];
+
+airbnbEvents.forEach(a => {
+  const aStart = a.start.slice(0, 8);
+  const aEnd = a.end.slice(0, 8);
+
+  const match = vrboEvents.find(v =>
+    v.start.slice(0, 8) === aStart &&
+    v.end.slice(0, 8) === aEnd
+  );
+
+  if (match) {
+    matches.push(`✔ ${formatDate(aStart)} → ${formatDate(aEnd)}`);
   }
+});
+
+// Build output
+resultsDiv.innerHTML = "<h2>Results (Future Bookings Only)</h2>";
+
+if (matches.length > 0) {
+  resultsDiv.innerHTML += "<h3>Matched Bookings</h3><ul>" +
+    matches.map(m => `<li>${m}</li>`).join("") +
+    "</ul>";
+}
+
+if (mismatches.length > 0) {
+  resultsDiv.innerHTML += "<h3>Mismatches</h3><ul>" +
+    mismatches.map(m => `<li>${m}</li>`).join("") +
+    "</ul>";
+}
+
+if (risks.length > 0) {
+  resultsDiv.innerHTML += "<h3>Double‑Booking Risks</h3><ul>" +
+    risks.map(r => `<li>${r}</li>`).join("") +
+    "</ul>";
+}
+
+// If everything matches
+if (matches.length > 0 && mismatches.length === 0 && risks.length === 0) {
+  resultsDiv.innerHTML += "<p>✔ Calendars match perfectly for all future bookings.</p>";
+}
+
 
   if (mismatches.length > 0) {
     resultsDiv.innerHTML += "<h3>Mismatches</h3><ul>" +
