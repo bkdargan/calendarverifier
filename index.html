@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Airbnb + Vrbo Sync Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Airbnb + Vrbo Calendar Sync Checker</h1>
+  <p>Upload your Airbnb and Vrbo iCal files to detect mismatches and double‑booking risks.</p>
+
+  <div class="upload-section">
+    <div>
+      <h3>Airbnb iCal</h3>
+      <input type="file" id="airbnbFile" accept=".ics">
+    </div>
+
+    <div>
+      <h3>Vrbo iCal</h3>
+      <input type="file" id="vrboFile" accept=".ics">
+    </div>
+  </div>
+
+  <button id="compareBtn">Compare Calendars</button>
+
+  <div id="results"></div>
+
+  <script src="ical.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
