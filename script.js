@@ -1,3 +1,16 @@
+function isFuture(dateString) {
+  const year = dateString.slice(0, 4);
+  const month = dateString.slice(4, 6);
+  const day = dateString.slice(6, 8);
+
+  const eventDate = new Date(`${year}-${month}-${day}`);
+  const today = new Date();
+
+  // Remove time portion for accurate comparison
+  today.setHours(0, 0, 0, 0);
+
+  return eventDate >= today;
+}
 document.getElementById("compareBtn").addEventListener("click", async () => {
   const airbnbFile = document.getElementById("airbnbFile").files[0];
   const vrboFile = document.getElementById("vrboFile").files[0];
